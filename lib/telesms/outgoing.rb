@@ -71,7 +71,7 @@ module Telesms
     #
     # @return [String]
     def formatted_to
-      "#{to}@#{Base.gateways[@provider][:sms]}" rescue raise "Invalid provider"
+      "#{to}@#{Base.gateways[@provider][:sms]}" rescue raise "Invalid provider.  Provider: #{@provider}, Base.gateways: #{Base.gateways}"
     end
 
     # This method sanitizes the message body.
