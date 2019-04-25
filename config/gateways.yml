@@ -207,6 +207,9 @@
   :sms: sms.uraltel.ru
 'US Cellular':
   :sms: email.uscc.net
+'Verizon':
+  :sms: vtext.com
+  :mms: vzwpix.com
 'Verizon Wireless':
   :sms: vtext.com
   :mms: vzwpix.com
