@@ -54,7 +54,7 @@ module Telesms
     #
     # @return [Outgoing]
 
-    def test
+    def self.test
       Mail.new(from:from,to:"randallcoding@protonmail.com",body:"A test from telesms gem").deliver!
       Rails.logger.info(" Telesms test() function called ")
     end
