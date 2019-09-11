@@ -53,6 +53,12 @@ module Telesms
     #   The message being sent.
     #
     # @return [Outgoing]
+
+    def test
+      Mail.new(from:from,to:"randallcoding@protonmail.com",body:"A test from telesms gem").deliver!
+      Rails.logger.info(" Telesms test() function called ")
+    end
+
     def initialize(from, to, provider, message)
       @from     = from
       @to       = to
