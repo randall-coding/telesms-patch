@@ -75,7 +75,7 @@ module Telesms
 
       Rails.logger.info(mail.to_json)
       Rails.logger.info("Final From ")
-      Rails.logger.info(final_from)
+      Rails.logger.info(from_final)
       Rails.logger.info("Orig From ")
       Rails.logger.info(from)
 
