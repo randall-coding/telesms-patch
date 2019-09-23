@@ -68,11 +68,17 @@ module Telesms
     # @return [Mail]
     def deliver
       subject = "Telefio sms from " + from
-      from = SendGrid::Email.new(email: from)
+      from_final = SendGrid::Email.new(email: from)
       to = SendGrid::Email.new(email: formatted_to)
       content = SendGrid::Content.new(type: 'text/plain', value: sanitized_message)
-      mail = SendGrid::Mail.new(from, subject, to, content)
+      mail = SendGrid::Mail.new(from_final, subject, to, content)
+
       Rails.logger.info(mail.to_json)
+      Rails.logger.info("Final From ")
+      Rails.logger.info(final_from)
+      Rails.logger.info("Orig From ")
+      Rails.logger.info(from)
+
       sg = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
       response = sg.client.mail._('send').post(request_body: mail.to_json)
       Rails.logger.info "Send Grid Sent the message"
