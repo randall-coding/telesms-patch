@@ -70,7 +70,7 @@ module Telesms
       subject = "Telefio sms from " + from
       from = SendGrid::Email.new(email: from)
       to = SendGrid::Email.new(email: formatted_to)
-      content = Content.new(type: 'text/plain', value: sanitized_message)
+      content = SendGrid::Content.new(type: 'text/plain', value: sanitized_message)
       mail = SendGrid::Mail.new(from, subject, to, content)
 
       sg = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
