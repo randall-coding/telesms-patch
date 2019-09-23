@@ -72,7 +72,7 @@ module Telesms
       to = SendGrid::Email.new(email: formatted_to)
       content = SendGrid::Content.new(type: 'text/plain', value: sanitized_message)
       mail = SendGrid::Mail.new(from, subject, to, content)
-
+      Rails.logger.info(mail.to_json)
       sg = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
       response = sg.client.mail._('send').post(request_body: mail.to_json)
       Rails.logger.info "Send Grid Sent the message"
