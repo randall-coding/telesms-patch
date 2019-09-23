@@ -1,4 +1,7 @@
 module Telesms
+  require 'sendgrid-ruby'
+  include SendGrid
+
   # This class represents an outgoing message.
   class Outgoing
     extend Base
@@ -53,12 +56,6 @@ module Telesms
     #   The message being sent.
     #
     # @return [Outgoing]
-
-    def self.emailtest
-      Mail.new(from:"sms+5026@telefio.com",to:"4807031656@tmomail.net",body:"A test from telesms gem").deliver!
-      Rails.logger.info(" Telesms test() function called ")
-    end
-
     def initialize(from, to, provider, message)
       @from     = from
       @to       = to
@@ -70,7 +67,21 @@ module Telesms
     #
     # @return [Mail]
     def deliver
-      Mail.new(from: from, to: formatted_to, body: sanitized_message).deliver!
+      from = SendGrid::Email.new(email: from)
+      to = Email.new(email: formatted_to)
+      subject = "Telefio sms from " + from
+      content = Content.new(type: 'text/plain', value: sanitized_message)
+      mail = SendGrid::Mail.new(from, subject, to, content)
+
+      sg = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
+      response = sg.client.mail._('send').post(request_body: mail.to_json)
+      Rails.logger.info "Send Grid Sent the message"
+      Rails.logger.info response.status_code
+      Rails.logger.info response.body
+      Rails.logger.info response.headers
+
+      # Old way
+      # Mail.new(from: from, to: formatted_to, body: sanitized_message).deliver!
     end
 
     # This method formats the TO address to include the provider.
