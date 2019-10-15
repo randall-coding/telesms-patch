@@ -67,7 +67,8 @@ module Telesms
     #
     # @return [Mail]
     def deliver
-      subject = "Telefio sms from " + from
+      #old way subject = "Telefio sms from " + from
+      subject = "Message:"
       from_final = SendGrid::Email.new(email: from)
       to = SendGrid::Email.new(email: formatted_to)
       content = SendGrid::Content.new(type: 'text/plain', value: sanitized_message)
